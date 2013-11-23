@@ -74,6 +74,13 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
     tooltip:SetPoint(unpack(position))
 end)
 
+-- Funcs needed later on
+-- GameTooltip_OnLoad(self)
+-- GameTooltip_OnTooltipSetUnit
+-- GameTooltip_ShowStatusBar
+-- GameTooltip_Hide
+-- GameTooltip_OnTooltipSetItem
+
 ---------------------------------------------
 -- Event Handlers
 ---------------------------------------------
