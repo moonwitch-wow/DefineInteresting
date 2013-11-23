@@ -1,0 +1,9 @@
+## Interface: 50400
+
+## Title: DefineInteresting
+## Notes: Just another tooltip addon
+## Author: Kelly Crabbé AKA MoonWitch
+## Version: 0.1a
+## X-Website: https://github.com/moonwitch/DefineInteresting
+
+core.lua
