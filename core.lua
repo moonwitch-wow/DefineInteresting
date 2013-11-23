@@ -27,7 +27,6 @@ local GameTooltipStatusBar = GameTooltipStatusBar
 -- Config
 ---------------------------------------------
 local font = STANDARD_TEXT_FONT
-local fontSize = 12
 
 local backdrop = {
     bgFile = "Interface\Buttons\WHITE8x8",
