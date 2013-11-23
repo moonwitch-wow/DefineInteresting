@@ -44,13 +44,15 @@ local position = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -10, 250 }
 -- Functions
 ---------------------------------------------
 -- Changing the textures
-for idx, tooltip in ipairs(tooltips) do
-  tooltip:SetBackdrop(backdrop)
-  tooltip:SetScale(scale)
-  tooltip:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b)
-  tooltip:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
-  -- tooltip:HookScript("OnShow", TooltipOnShow)
+for i = 1, #tooltips do
+  tooltips[i]:SetBackdrop(backdrop)
+  tooltips[i]:SetScale(scale)
 end
+
+--change some text sizes
+GameTooltipHeaderText:SetFont(font, 14, "THINOUTLINE")
+GameTooltipText:SetFont(font, 12, "THINOUTLINE")
+Tooltip_Small:SetFont(font, 11, "THINOUTLINE")
 
 -- Reposition the HP bar
 GameTooltipStatusBar:ClearAllPoints()
@@ -66,36 +68,7 @@ GameTooltipStatusBar.bg:SetTexture(1,1,1)
 GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.7)
 
 -- Hook to move
-hooksecurefunc("GameTooltip_SetDefaultAnchor", function (tooltip, parent)
+hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
     tooltip:SetOwner(parent, "ANCHOR_NONE")
     tooltip:SetPoint(unpack(position))
 end)
-
--- -- Hook into this func to color borders function GameTooltip_UnitColor(unit)
-
--- -- Hook into this for loading
--- hooksecurefunc ("GameTooltip_OnLoad", function (self, ...)
---     local TOOLTIP_UPDATE_TIME = _G.TOOLTIP_UPDATE_TIME
---     self.updateTooltip = TOOLTIP_UPDATE_TIME;
---     self:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b)
---     self:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
--- end)
-
--- -- Hooking into the On Hide
--- hooksecurefunc ("GameTooltip_OnHide", function (self, ...)
---     self:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b)
---     self:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
---     self.default = nil;
---     GameTooltip_ClearMoney(self);
---     GameTooltip_ClearStatusBars(self);
---     if ( self.shoppingTooltips ) then
---         for _, frame in pairs(self.shoppingTooltips) do
---             frame:Hide();
---         end
---     end
---     self.comparing = false;
--- end)
-
--- ---------------------------------------------
--- -- Registering Events
--- ---------------------------------------------
