@@ -44,6 +44,7 @@ local position = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -10, 250 }
 ---------------------------------------------
 -- Functions
 ---------------------------------------------
+-- Changing the textures
 for idx, tooltip in ipairs(tooltips) do
   tooltip:SetBackdrop(backdrop)
   tooltip:SetScale(scale)
@@ -51,6 +52,19 @@ for idx, tooltip in ipairs(tooltips) do
   tooltip:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
   -- tooltip:HookScript("OnShow", TooltipOnShow)
 end
+
+-- Reposition the HP bar
+GameTooltipStatusBar:ClearAllPoints()
+GameTooltipStatusBar:SetPoint("LEFT",3,0)
+GameTooltipStatusBar:SetPoint("RIGHT",-3,0)
+GameTooltipStatusBar:SetPoint("BOTTOM",GameTooltipStatusBar:GetParent(),"BOTTOM",0,3)
+GameTooltipStatusBar:SetHeight(5)
+
+GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil,"BACKGROUND",nil,-8)
+GameTooltipStatusBar.bg:SetPoint("TOPLEFT",-1,1)
+GameTooltipStatusBar.bg:SetPoint("BOTTOMRIGHT",1,-1)
+GameTooltipStatusBar.bg:SetTexture(1,1,1)
+GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.7)
 
 -- Hook to move
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function (tooltip, parent)
