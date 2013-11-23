@@ -1,7 +1,6 @@
 ---------------------------------------------
 -- Setting up the local scope
 ---------------------------------------------
-local myname, ns = ...
 
 ---------------------------------------------
 -- Variables and shit
@@ -47,6 +46,8 @@ local position = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -10, 250 }
 for i = 1, #tooltips do
   tooltips[i]:SetBackdrop(backdrop)
   tooltips[i]:SetScale(scale)
+  tooltips[i]:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b)
+  tooltips[i]:SetBackdropBorderColor(backdropColor.r, backdropColor.g, backdropColor.b, backdropColor.a)
 end
 
 --change some text sizes
@@ -72,3 +73,7 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
     tooltip:SetOwner(parent, "ANCHOR_NONE")
     tooltip:SetPoint(unpack(position))
 end)
+
+---------------------------------------------
+-- Event Handlers
+---------------------------------------------
