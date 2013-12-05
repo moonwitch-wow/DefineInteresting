@@ -6,8 +6,6 @@
 ---------------------------------------------
 -- Variables and shit
 ---------------------------------------------
-local player = UnitName("player")
-local server = GetRealmName()
 local tooltips = {   -- hijacking the tooltips
   GameTooltip,
   ItemRefTooltip,
@@ -17,13 +15,11 @@ local tooltips = {   -- hijacking the tooltips
   ItemRefShoppingTooltip1,
   ItemRefShoppingTooltip2,
   ItemRefShoppingTooltip3,
-  WorldMapTooltip
+  --WorldMapTooltip
 }
+SetCVar("breakUpLargeNumbers", 1)
 
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local FACTION_BAR_COLORS = FACTION_BAR_COLORS
-local GameTooltipStatusBar = GameTooltipStatusBar
-SetCVar("breakUpLargeNumbers", 1)
 
 ---------------------------------------------
 -- Config
@@ -31,15 +27,15 @@ SetCVar("breakUpLargeNumbers", 1)
 local font = STANDARD_TEXT_FONT
 
 local backdrop = {
-    bgFile = "Interface\Buttons\WHITE8x8",
-    edgeFile = "Interface\Buttons\WHITE8x8",
+    bgFile = "Interface\\Buttons\\WHITE8x8",
+    edgeFile = "Interface\\Buttons\\WHITE8x8",
     tiled = false,
     edgeSize = 1,
     insets = { left = -1, right = -1, top = -1, bottom = -1}
   }
 local backdropColor = { r = 0.1, g = 0.1, b = 0.1, a = 1}
 local borderColor = { r = .6, g = .6, b = .6, a = 1 }
-local scale = 1.2
+local scale = 1
 local position = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -10, 250 }
 
 ---------------------------------------------
@@ -48,12 +44,12 @@ local position = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -10, 250 }
 -- Changing the textures
 for i = 1, #tooltips do -- turns out the default color for non-textures tooltips is rgba(0,0,1,1)
   tooltips[i]:SetBackdrop(backdrop)
-  tooltips[i].SetBackdrop = function() end -- use empty func as dummy
+  -- tooltips[i].SetBackdrop = function() end -- use empty func as dummy
   tooltips[i]:SetScale(scale)
   -- tooltips[i].SetBackdropColor = function() end -- use empty func as dummy
   tooltips[i]:SetBackdropColor( backdropColor.r, backdropColor.g, backdropColor.b, backdropColor.a )
   -- tooltips[i].SetBackdropBorderColor = function() end -- use empty func as dummy
-  tooltips[i]:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, borderColor.a)
+  tooltips[i]:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
 end
 
 --change some text sizes
@@ -91,25 +87,29 @@ end)
 -- GameTooltip_OnLoad()
 GameTooltip:HookScript("OnLoad", function(self)
   -- -- assigning default DOESNT WORK
-  -- self:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b)
-  -- self:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
+  self:SetBackdropColor( 0.1, 0.1, 0.1)
+  self:SetBackdropBorderColor( 0.6, 0.6, 0.6)
 end)
 
 -- Hook to colorize our shit
-GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
+GameTooltip:HookScript("OnTooltipSetUnit", function(self)
   local unit = (select(2, self:GetUnit())) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover") or nil
-  self:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b)
+  self:SetBackdropColor( 0.1, 0.1, 0.1)
+  self:SetBackdropBorderColor( 0.6, 0.6, 0.6)
   self.unit = nil
 
   if unit then
     self.unit = unit
 
-    if UnitIsPlayer(unit) then
+    GameTooltipTextLeft1:SetFontObject(GameTooltipHeaderText)
+
+    if UnitPlayerControlled(unit) then
       -- if unit is a playable character -- classcolors!
-      local color = RAID_CLASS_COLORS[select(2, UnitClass(unit))]
-      GameTooltipStatusBar:SetStatusBarColor(color.r,color.g,color.b)
-      GameTooltipTextLeft1:SetTextColor(color.r,color.g,color.b)
-      GameTooltip:SetBackdropBorderColor(color.r, color.g, color.b)
+      local classcolor = RAID_CLASS_COLORS[select(2, UnitClass(unit))]
+      GameTooltipStatusBar:SetStatusBarColor(classcolor.r,classcolor.g,classcolor.b)
+      GameTooltipTextLeft1:SetTextColor(classcolor.r,classcolor.g,classcolor.b)
+      -- GameTooltip:SetBackdropBorderColor(classcolor.r, classcolor.g, classcolor.b)
+      -- GameTooltip.SetBackdropBorderColor = function() end
 
       -- if units are AFK/DND/DEAD/GHOST
       if UnitIsAFK(unit) then
@@ -118,6 +118,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
         self:AppendText(" |cffcc0000<DND>|r")
       elseif UnitIsDeadOrGhost(unit) then
         self:AppendText(' |cffcc0000<DEAD>|r')
+        GameTooltip_ClearStatusBars(self) -- dont need empty healthbars
       end
 
       -- Guild Info
