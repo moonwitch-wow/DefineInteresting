@@ -74,8 +74,8 @@ GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.7)
 
 -- Hook to move
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-    tooltip:SetOwner(parent, "ANCHOR_NONE")
-    tooltip:SetPoint(unpack(position))
+  tooltip:SetOwner(parent, "ANCHOR_NONE")
+  tooltip:SetPoint(unpack(position))
 end)
 
 -- Since we're moving around shit on the tooltip, we need to call this one too
