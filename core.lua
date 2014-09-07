@@ -53,9 +53,9 @@ for i = 1, #tooltips do -- turns out the default color for non-textures tooltips
 end
 
 --change some text sizes
-GameTooltipHeaderText:SetFont(font, 15, nil)
-GameTooltipText:SetFont(font, 13, nil)
-Tooltip_Small:SetFont(font, 12, nil)
+GameTooltipHeaderText:SetFont(font, 13, nil)
+GameTooltipText:SetFont(font, 12, nil)
+Tooltip_Small:SetFont(font, 11, nil)
 Tooltip_Small:SetShadowColor(0,0,0,1)
 Tooltip_Small:SetShadowOffset(1, -1)
 
