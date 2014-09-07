@@ -33,8 +33,8 @@ local backdrop = {
     edgeSize = 1,
     insets = { left = -1, right = -1, top = -1, bottom = -1}
   }
-local backdropColor = { r = 0.1, g = 0.1, b = 0.1, a = 1}
-local borderColor = { r = .6, g = .6, b = .6, a = 1 }
+local backdropColor = { r = 0.1, g = 0.1, b = 0.1, a = .8}
+local borderColor = { r = .6, g = .6, b = .6, a = .8 }
 local scale = 1
 local position = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -10, 250 }
 
@@ -86,16 +86,16 @@ end)
 
 -- GameTooltip_OnLoad()
 GameTooltip:HookScript("OnLoad", function(self)
-  -- -- assigning default DOESNT WORK
-  self:SetBackdropColor( 0.1, 0.1, 0.1)
-  self:SetBackdropBorderColor( 0.6, 0.6, 0.6)
+  -- assigning default DOESNT WORK
+  self:SetBackdropColor( backdropColor.r, backdropColor.g, backdropColor.b, backdropColor.a )
+  self:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
 end)
 
 -- Hook to colorize our shit
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
   local unit = (select(2, self:GetUnit())) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover") or nil
-  self:SetBackdropColor( 0.1, 0.1, 0.1)
-  self:SetBackdropBorderColor( 0.6, 0.6, 0.6)
+  self:SetBackdropColor( backdropColor.r, backdropColor.g, backdropColor.b, backdropColor.a )
+  self:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
   self.unit = nil
 
   if unit then
